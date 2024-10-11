@@ -26,6 +26,8 @@ export function BottomTabBarContextProvider(props: {
   children: React.ReactNode;
 }) {
   const [elementsProps, setElementsProps] = useState<ElementProps>({});
+  // Track the props in a ref so we don't have to recreate the
+  // setElementProps function each time the props changes
   const elementsPropsRef = useRef<ElementProps>(elementsProps);
   elementsPropsRef.current = elementsProps;
 

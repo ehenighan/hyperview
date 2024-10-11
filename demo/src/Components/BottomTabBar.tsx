@@ -8,7 +8,7 @@ const namespaceURI = 'https://instawork.com/hyperview-navigation';
 /**
  * This component's only job is to associate its own props with a
  * navigator ID in BottomTabBarContext. It does not render anything.
- * It's child elements are used by the BottomTabBar component
+ * It's child elements are used by the Core/BottomTabBar component
  * to build the bottom tab bar UI.
  *
  * Usage:
