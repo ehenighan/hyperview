@@ -1,6 +1,6 @@
 import type { HvComponentProps, LocalName } from 'hyperview';
 import React, { useContext } from 'react';
-import { useFocusEffect, useRoute } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 import { BottomTabBarContext } from '../Contexts';
 
 const namespaceURI = 'https://instawork.com/hyperview-navigation';
@@ -22,7 +22,6 @@ const namespaceURI = 'https://instawork.com/hyperview-navigation';
 const BottomTabBar = (props: HvComponentProps) => {
   const { setElementProps } = useContext(BottomTabBarContext);
   const navigator = props.element.getAttributeNS(namespaceURI, 'navigator');
-  const route = useRoute();
 
   // Don't register these children as the UI components
   // if this screen isn't focused
@@ -38,8 +37,8 @@ const BottomTabBar = (props: HvComponentProps) => {
         return;
       }
 
-      setElementProps(navigator, route, props);
-    }, [navigator, props, setElementProps, route]),
+      setElementProps(navigator, props);
+    }, [navigator, props, setElementProps]),
   );
 
   return null;

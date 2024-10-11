@@ -23,7 +23,6 @@
     "@react-native-community/datetimepicker": "7.6.2",
     "@react-native-picker/picker": "2.6.1",
     "@react-navigation/bottom-tabs": "^6.5.9",
-    "@react-navigation/core": "^6.4.17",
     "@react-navigation/native": "^6.1.8",
     "@react-navigation/stack": "^6.3.18",
     "@types/moment": "^2.13.0",
