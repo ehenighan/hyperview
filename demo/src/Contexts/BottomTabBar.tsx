@@ -10,17 +10,11 @@ type ElementProps = Record<string, HvComponentProps>;
  */
 export const BottomTabBarContext = createContext<{
   elementsProps: ElementProps | undefined;
-  setElementProps:
-    | ((
-        navigator: string,
-        props: HvComponentProps,
-      ) => void)
-    | undefined;
+  setElementProps: ((id: string, props: HvComponentProps) => void) | undefined;
 }>({
   elementsProps: undefined,
   setElementProps: undefined,
 });
-
 
 export function BottomTabBarContextProvider(props: {
   children: React.ReactNode;
@@ -32,10 +26,7 @@ export function BottomTabBarContextProvider(props: {
   elementsPropsRef.current = elementsProps;
 
   const setElementProps = useCallback(
-    (
-      navigator: string,
-      p: HvComponentProps,
-    ) => {
+    (navigator: string, p: HvComponentProps) => {
       const currentNavigatorProps =
         elementsPropsRef.current[navigator] || ({} as HvComponentProps);
       // If the props object hasn't actually changed,
