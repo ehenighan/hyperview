@@ -50,14 +50,6 @@ export const BottomTabBar = ({ id }: Props): JSX.Element | null => {
       // Could *possibly* be moved up into the context manager,
       // but I don't want to fiddle with it any more
       setElement(opts.newElement);
-    } else if (action === 'navigate') {
-      // Always allow the current render loop to complete
-      // before we actually start the navigation action,
-      // so the tab selection visibly updates before
-      // a potentially slow re-render of the destination screen
-      setTimeout(() => {
-        props.onUpdate(href, 'navigate', currentElement, opts);
-      }, 0);
     } else {
       props.onUpdate(href, action, currentElement, opts);
     }
