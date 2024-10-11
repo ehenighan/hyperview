@@ -1,5 +1,6 @@
 import type { HvComponentProps, LocalName } from 'hyperview';
-import { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
+import { useFocusEffect, useRoute } from '@react-navigation/native';
 import { BottomTabBarContext } from '../Contexts';
 
 const namespaceURI = 'https://instawork.com/hyperview-navigation';
@@ -7,7 +8,7 @@ const namespaceURI = 'https://instawork.com/hyperview-navigation';
 /**
  * This component's only job is to associate its own props with a
  * navigator ID in BottomTabBarContext. It does not render anything.
- * It's child elements are used by the Core/BottomTabBar component
+ * It's child elements are used by the BottomTabBar component
  * to build the bottom tab bar UI.
  *
  * Usage:
@@ -19,18 +20,28 @@ const namespaceURI = 'https://instawork.com/hyperview-navigation';
  * </navigation:bottom-tab-bar>
  */
 const BottomTabBar = (props: HvComponentProps) => {
-  const ctx = useContext(BottomTabBarContext);
+  const { setElementProps } = useContext(BottomTabBarContext);
   const navigator = props.element.getAttributeNS(namespaceURI, 'navigator');
-  useEffect(() => {
-    if (!navigator) {
-      console.warn(
-        '<navigation:bottom-tab-bar> element is missing `navigator` attribute',
-      );
-      return;
-    }
-    ctx.setElementProps?.(navigator, props);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [navigator, props]); // Exclude ctx from dependencies to avoid infinite loop
+  const route = useRoute();
+
+  // Don't register these children as the UI components
+  // if this screen isn't focused
+  useFocusEffect(
+    React.useCallback(() => {
+      if (!navigator) {
+        console.warn(
+          '<navigation:bottom-tab-bar> element is missing `navigator` attribute',
+        );
+        return;
+      }
+      if (!setElementProps) {
+        return;
+      }
+
+      setElementProps(navigator, route, props);
+    }, [navigator, props, setElementProps, route]),
+  );
+
   return null;
 };
 
